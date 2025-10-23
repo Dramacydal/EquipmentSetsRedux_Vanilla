@@ -1,4 +1,4 @@
-## Interface: 11505
+## Interface: 11508
 ## Title : EquipmentSets
 ## Version : 2.0.0
 ## Notes: Allows you to save your own gear presets and switch between them. Command: /es

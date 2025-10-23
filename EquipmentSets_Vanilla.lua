@@ -466,6 +466,7 @@ function es:SaveCurrentSet(setId)
         currentName = self:DefaultName(setId)
     end
 
+    es:Log("Saving current set to №" .. setId .. " " .. es:Colorize(Colors.ORANGE, currentName))
     self:ResetSet(setId, currentName)
     for x = 1, MAX_SLOT_NUMBER do
         self:SaveItem(setId, x, self:GetEquippedName(x))
@@ -763,28 +764,6 @@ local commands = {
             end)
         end
     },
-    test = {
-        handler = function(args)
-            es:Log("Main handler, args: " .. dump(args))
-        end,
-        commandTable = {
-            a = {
-                handler = function(args)
-                    es:Log("Command a, args: " .. dump(args))
-                end
-            },
-            b = {
-                handler = function(args)
-                    es:Log("Command b, args: " .. dump(args))
-                end
-            },
-            c = {
-                handler = function(args)
-                    es:Log("Command c, args: " .. dump(args))
-                end
-            },
-        }
-    }
 }
 
 commands['load'] = commands['equip']
@@ -919,6 +898,7 @@ function es:Initialize1()
             es:SaveCurrentSet(self.setId)
             es:SetName(self.setId, name)
         elseif self.action == 'rename' then
+            es:Log("Renamed set #" .. self.setId .. ' to ' .. es:Colorize(Colors.ORANGE, name))
             es:SetName(self.setId, name)
         end
 
