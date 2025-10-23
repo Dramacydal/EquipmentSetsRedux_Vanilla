@@ -1,4 +1,4 @@
-EquipmentSets_Classic
+EquipmentSetsRedux_Vanilla
 =====================
 
 Fork of [https://www.curseforge.com/wow/addons/equipmentsets](https://www.curseforge.com/wow/addons/equipmentsets)

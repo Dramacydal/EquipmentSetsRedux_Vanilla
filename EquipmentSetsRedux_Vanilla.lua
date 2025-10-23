@@ -1,3 +1,6 @@
+-- Author: Dramacydal
+-- https://github.com/Dramacydal/EquipmentSetsRedux_Vanilla
+--
 -- Author: Fr0stwing
 -- https://www.curseforge.com/members/fr0stwing/
 -- https://github.com/fr0stwing
