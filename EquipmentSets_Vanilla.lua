@@ -583,6 +583,7 @@ local commands = {
             es:Log("Equipping set №" .. setId .. " " .. es:GetName(setId, Colors.ORANGE))
             es:EquipSet(setId)
         end,
+        description = "<setId> or <name> - Equip set by number or name"
     },
     save = {
         handler = function(args)
@@ -632,14 +633,16 @@ local commands = {
             if #name > 0 then
                 es:SetName(setId, name)
             end
-        end
+        end,
+        description = "<name> or <setId> <name> - Save set with with specific name or to specific slot"
     },
     unequip = {
         handler = function(args)
             if es:UnequipEverything() then
                 es:Log("Unequipped all items")
             end
-        end
+        end,
+        description = "- Unequip all items"
     },
     rename = {
         handler = function(args)
@@ -662,7 +665,8 @@ local commands = {
 
             es:Log("Renaming equpment set №" .. setId .. " to \"" .. name .. "\"")
             es:SetName(setId, name)
-        end
+        end,
+        description = "<setId> <name> - Set name for equipment set"
     },
     remove = {
         handler = function(args)
@@ -690,7 +694,8 @@ local commands = {
 
             es:Log("Removed equipment set №" .. setId .. " " .. es:GetName(setId, Colors.ORANGE))
             es:RemoveSet(setId)
-        end
+        end,
+        description = "<setId> - Remove equipment set"
     },
     list = {
         handler = function(args)
@@ -718,7 +723,8 @@ local commands = {
                     es:GetName(i, Colors.ORANGE) .. ' (' .. equippedItems .. '/' .. hasItems .. '/' .. totalItems .. ')')
             end)
             es:Log("Total sets stored: " .. es:Colorize(Colors.ORANGE, cnt) .. ", legend: equipped/available/total")
-        end
+        end,
+        description = "- List stored equipment sets"
     },
     setposition = {
         handler = function(args)
@@ -755,14 +761,16 @@ local commands = {
                     positionId .. ' from set №' .. setId .. ' ' .. es:GetName(setId, Colors.ORANGE))
                 es:SaveItem(setId, positionId, nil)
             end
-        end
+        end,
+        description = "<setId> <positionId> - Remove specific position (slotId) from stored set"
     },
     reset = {
         handler = function(args)
             es:ShowConfirmation("Wipe " .. es:Colorize(Colors.RED, 'ALL') .. ' stored equipments sets?', function()
                 SavedSets = {}
             end)
-        end
+        end,
+        description = "- Remove all equipment sets"
     },
 }
 
@@ -776,10 +784,10 @@ function CollectUsages(dataTable)
 
     for subCommand, subData in pairs(dataTable) do
         if not subData.commandTable then
-            table.insert(usages, subCommand)
+            table.insert(usages, subCommand .. ' ' .. (subData.description or ''))
         else
             if subData.handler then
-                table.insert(usages, subCommand)
+                table.insert(usages, subCommand .. ' ' .. (subData.description or ''))
             end
 
             for _, subUsage in pairs(CollectUsages(subData.commandTable)) do
