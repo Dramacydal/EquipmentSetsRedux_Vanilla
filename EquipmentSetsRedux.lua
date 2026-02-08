@@ -1028,7 +1028,7 @@ function es:Initialize1()
                     CloseDropDownMenus()
                     return
                 elseif arg2 == 'delete' then
-                    text = self:Colorize("Delete", Colors.RED) .. " equipment set " .. es:GetName(arg1, Colors.ORANGE) .. " ?"
+                    text = es:Colorize(Colors.RED, "Delete") .. " equipment set " .. es:GetName(arg1, Colors.ORANGE) .. " ?"
                     OnAccept = function()
                         es:RemoveSet(arg1)
                     end
