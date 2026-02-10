@@ -23,6 +23,7 @@ local Colors = {
     LIGHT_YELLOW = LIGHTYELLOW_FONT_COLOR,
     GRAY = GRAY_FONT_COLOR,
     ORANGE = ORANGE_FONT_COLOR,
+    PURPLE = EPIC_PURPLE_COLOR,
 }
 
 if not table.removemulti then
@@ -277,7 +278,7 @@ function es:GetName(setId, color)
 end
 
 function es:DefaultName(setId)
-    return "Loadout " .. setId
+    return "Set #" .. setId
 end
 
 function es:SetName(setId, name)
@@ -469,7 +470,7 @@ function es:SaveCurrentSet(setId)
         currentName = self:DefaultName(setId)
     end
 
-    es:Log("Saving current set to №" .. setId .. " " .. es:Colorize(Colors.ORANGE, currentName))
+    es:Log("Saving current set to " .. es:Colorize(Colors.ORANGE, currentName))
     self:ResetSet(setId, currentName)
     for x = 1, MAX_SLOT_NUMBER do
         self:SaveItem(setId, x, self:GetEquippedName(x))
@@ -991,7 +992,7 @@ function es:Initialize1()
                 fSettings:Show()
                 CloseDropDownMenus()
             end
-            info.text = "Create new Set"
+            info.text = "Create"
             info.notCheckable = true
             info.tooltipOnButton, info.checked, info.disabled = true, false, false
             info.tooltipTitle = "Create new set"
@@ -1007,10 +1008,10 @@ function es:Initialize1()
                 CloseDropDownMenus()
             end
 
-            info.text = "Unequip everything"
+            info.text = "Unequip all"
             info.notCheckable = true
             info.tooltipOnButton, info.checked, info.disabled = true, false, false
-            info.tooltipTitle = "Unequip Everything"
+            info.tooltipTitle = "Unequip everything"
             info.tooltipText = "Click this to unequip everything"
             info.hasArrow = false
             UIDropDownMenu_AddButton(info)
@@ -1097,7 +1098,7 @@ function es.OnItem(tip)
             local sets = {}
             es:Each(function(i)
                 if es:HasItem(i, name) then
-                    table.insert(sets, es:GetName(i))
+                    table.insert(sets, es:GetName(i, Colors.PURPLE))
                 end
             end)
 
