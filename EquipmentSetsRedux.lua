@@ -14,6 +14,8 @@ local addonName, EquipmentSets = ...
 local es = EquipmentSets
 local frame = CreateFrame("FRAME");
 
+local setListDropdown
+
 local MAX_SLOT_NUMBER = 20
 
 local Colors = {
@@ -47,6 +49,14 @@ function es:Each(func)
     for i, set in pairs(SavedSets) do
         if set ~= nil then
             func(i, set)
+        end
+    end
+end
+
+function es:GetEquippedSetName()
+    for i, _ in pairs(SavedSets) do
+        if self:IsSetEquipped(i) then
+            return self:GetName(i)
         end
     end
 end
@@ -287,6 +297,10 @@ function es:SetName(setId, name)
     end
 
     SavedSets[setId].name = name
+
+    if self:IsSetEquipped(setId) then
+        UIDropDownMenu_SetText(setListDropdown, name)
+    end
 end
 
 function es:IsSetEquipped(setId)
@@ -551,6 +565,8 @@ function es:EquipSet(setId)
     if #toUnequip > 0 then
         self:UneqipSlots(toUnequip)
     end
+
+    UIDropDownMenu_SetText(setListDropdown, self:GetName(setId) or "Sets")
 end
 
 for i = 1, 10 do
@@ -852,6 +868,9 @@ function es:UnequipEverything()
     for x = 1, MAX_SLOT_NUMBER do
         table.insert(slots, x)
     end
+
+    UIDropDownMenu_SetText(setListDropdown, "Sets")
+
     return self:UneqipSlots(slots)
 end
 
@@ -918,11 +937,11 @@ function es:Initialize1()
     end
 
     -- Dropdown menu
-    local setListDropdown = CreateFrame("FRAME", nil, PaperDollFrame, "UIDropDownMenuTemplate")
+    setListDropdown = CreateFrame("FRAME", nil, PaperDollFrame, "UIDropDownMenuTemplate")
     setListDropdown:SetPoint("BOTTOMLEFT", 0, 80, 0, 0)
     UIDropDownMenu_SetWidth(setListDropdown, 80)
     --UIDropDownMenu_SetText(dropDown, "" .. favoriteNumber)
-    UIDropDownMenu_SetText(setListDropdown, "Sets")
+    UIDropDownMenu_SetText(setListDropdown, self:GetEquippedSetName() or "Sets")
     UIDropDownMenu_Initialize(setListDropdown, function(self, level, menuList)
         local info = UIDropDownMenu_CreateInfo()
 
